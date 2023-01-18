@@ -1,14 +1,17 @@
 #include "display.h"
 
-void Display::drawCross(pico_ssd1306::SSD1306 *display)
+void display::clear(pico_ssd1306::SSD1306 *display)
 {
-  for (int y = 0; y < 32; y++)
-  {
-    display->setPixel(32, y);
-  }
+  display->clear();
+  display->sendBuffer();
+}
 
-  for (int x = 0; x < 128; x++)
-  {
-    display->setPixel(x, 8);
-  }
+void display::drawText(pico_ssd1306::SSD1306 *display, const char *text, uint8_t col, uint8_t row)
+{
+  col = col * 8;
+  row = row * 8;
+
+  drawText(display, font_8x8, text, col, row, pico_ssd1306::WriteMode::ADD);
+
+  display->sendBuffer();
 }

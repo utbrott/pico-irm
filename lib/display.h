@@ -5,9 +5,10 @@
 #include "../pico-ssd1306/ssd1306.h"
 #include "../pico-ssd1306/textRenderer/TextRenderer.h"
 
-namespace Display
+namespace display
 {
-    void drawCross(pico_ssd1306::SSD1306 *display);
+    void clear(pico_ssd1306::SSD1306 *display);
+    void drawText(pico_ssd1306::SSD1306 *display, const char *text, uint8_t col, uint8_t row);
 }
 
 #endif /* _DISPLAY_H */
