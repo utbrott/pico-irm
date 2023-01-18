@@ -12,6 +12,7 @@ pico_sdk_init()
 add_executable(${PROJECT_NAME}
     main.cpp
     lib/display.cpp
+    lib/measurement.cpp
 )
 
 add_subdirectory(
@@ -21,7 +22,9 @@ add_subdirectory(
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
     pico_ssd1306
+    hardware_gpio
     hardware_i2c
+    hardware_adc
 )
 
 pico_add_extra_outputs(${PROJECT_NAME})
