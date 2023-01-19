@@ -1,12 +1,13 @@
 #include <math.h>
 #include "measurement.h"
 
-#define R1 67000
-#define R2 22000
-#define PICO_ADC_REF 3.27f
+#define R1 66700
+#define R2 21800
+#define PICO_ADC_REF 3.27f /* @ ADC_REF pin */
 
-#define R_REF 1018 /* 1k ohm reference resistor, actual 1018 ohm */
-#define R_LOAD 15  /* 15 ohm Power Resistor */
+#define R_REF 1018   /* 1k ohm reference resistor, actual 1018 ohm */
+#define R_LOAD 16.85 /* 15 ohm Power Resistor, actual 16.85 ohm */
+#define R_MOS 0.15   /* IRL540N MOSFET Rds @ 3.3V */
 
 const float conversionFactor = PICO_ADC_REF / (1 << 12);
 
@@ -32,7 +33,7 @@ float measure::calculateIRes(float vRef, float vLoad)
 {
     /* Calculate currents */
     float iRef = vRef / R_REF;
-    float iLoad = vLoad / R_LOAD;
+    float iLoad = vLoad / (R_LOAD + R_MOS);
 
     float voltage = vRef - vLoad;
     float current = iRef - iLoad;
@@ -53,7 +54,7 @@ float measure::calculateEmForce(float vRef, float vLoad, float intRes)
 {
     /* Calculate currents */
     float iRef = vRef / R_REF;
-    float iLoad = vLoad / R_LOAD;
+    float iLoad = vLoad / (R_LOAD + R_MOS);
 
     float emForceRef = vRef + (iRef * intRes);
     float emForceLoad = vLoad + (iLoad + intRes);
