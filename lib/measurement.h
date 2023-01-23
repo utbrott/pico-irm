@@ -11,7 +11,6 @@ extern const float conversion_factor;
 namespace measure
 {
     float getVoltage(int adcId);
-    float getRoundedValue(float value);
     float calculateIRes(float vRef, float vLoad);
     float calculateEmForce(float v1, float v2, float intRes);
 }
